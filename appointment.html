@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Appointment - Bornian Pharmaceuticals</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-blue-600 text-white p-4">
+        <h1 class="text-2xl font-bold">Bornian Pharmaceuticals</h1>
+        <nav class="mt-2">
+            <a href="index.html" class="text-white mr-4">Home</a>
+            <a href="appointment.html" class="text-white mr-4">Book Appointment</a>
+            <button id="logoutButton" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Logout</button>
+        </nav>
+    </header>
+
+    <main class="container mx-auto mt-8 p-4">
+        <section id="appointmentBooking" class="mb-8 ">
+            <h2 class="text-2xl font-semibold mb-4 max-w-sm mx-auto">Book an Appointment</h2>
+            <form id="appointmentForm" class="max-w-sm mx-auto">
+                <div class="mb-4">
+                    <label for="patientName" class="block mb-2">Patient Name:</label>
+                    <input type="text" id="patientName" name="patientName" required class="w-full p-2 border rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="phoneNumber" class="block mb-2">Phone Number:</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" required class="w-full p-2 border rounded">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block mb-2">Email:</label>
+                    <input type="email" id="email" name="email" required class="w-full p-2 border rounded">
+                </div>
+
+                <div class="mb-4">
+                    <label for="physician" class="block mb-2">Select Physician:</label>
+                    <select id="physician" name="physician" required class="w-full p-2 border rounded">
+                        <!-- Options will be populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="appointmentDate" class="block mb-2">Appointment Date:</label>
+                    <input type="date" id="appointmentDate" name="appointmentDate" required class="w-full p-2 border rounded">
+                </div>
+                <button type="submit" class="bg-yellow-500 text-white px-4 py-2 rounded">Book Appointment</button>
+            </form>
+        </section>
+
+        <section id="result" class="hidden mb-8">
+            <!-- Results will be displayed here -->
+        </section>
+    </main>
+
+    <!-- Add this modal HTML structure -->
+    <div id="successModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Appointment Booked</h3>
+                <div class="mt-2 px-7 py-3">
+                    <p class="text-sm text-gray-500">Your appointment has been booked successfully!</p>
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="printReceiptButton" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300" onclick="downloadReceipt()">
+                        Download Appointment Receipt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add this after the existing successModal -->
+    <div id="receiptModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-center">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">Appointment Receipt</h3>
+                <div id="receiptContent" class="mt-2 px-7 py-3 text-left">
+                    <!-- Receipt content will be inserted here -->
+                </div>
+                <div class="items-center px-4 py-3">
+                    <button id="closeReceiptButton" class="px-4 py-2 bg-blue-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./appointment.js"></script>
+    <script>
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('user');
+            window.location.href = 'login.html';
+        });
+
+        // Updated function to show a success message in a modal
+        function showBookingSuccess() {
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden');
+
+            document.getElementById('modalLogoutButton').addEventListener('click', function() {
+                localStorage.removeItem('user');
+                window.location.href = 'login.html';
+            });
+        }
+    </script>
+</body>
+</html>
